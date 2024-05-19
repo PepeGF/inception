@@ -1,4 +1,6 @@
 all:
+	mkdir -p volumes/mariadb_vol
+	mkdir -p volumes/wordpress_vol
 	docker-compose up -d
 
 down:
