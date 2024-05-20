@@ -1,6 +1,7 @@
 all:
-	mkdir -p volumes/mariadb_vol
-	mkdir -p volumes/wordpress_vol
+	mkdir -p /home/josgarci/data
+	mkdir -p /home/josgarci/data/mariadb
+	mkdir -p /home/josgarci/data/wordpress
 	docker-compose up -d
 
 down:

@@ -48,14 +48,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/josgarci/fake_inception/volumes/mariadb_vol
+      device: /home/josgarci/data/mariadb
   wordpress_data:
     driver: local
     name: wordpress_data
     driver_opts:
       type: none
       o: bind
-      device: /home/josgarci/fake_inception/volumes/wordpress_vol
+      device: /home/josgarci/data/wordpress
 
 networks:
   inception:
