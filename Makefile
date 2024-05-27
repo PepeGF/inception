@@ -22,6 +22,7 @@ rm:
 
 rmi: down
 	@docker images --filter=reference="$(PROJECT_NAME)/*" -q | xargs -r docker rmi
+#docker images --filter reference=debian -q | xargs -r docker rmi
 
 volumes: down
 
