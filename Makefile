@@ -7,29 +7,40 @@ DC=docker-compose -f $(COMPOSE_FILE) -p $(PROJECT_NAME)
 all: up
 
 up:
-	mkdir -p volumes/mariadb_vol
-	mkdir -p volumes/wordpress_vol
+	mkdir -p ../data/mariadb_vol
+	mkdir -p ../data/wordpress_vol
 	$(DC) up -d
 
 down:
 	$(DC) down
 
 name:
+	echo $(shell grep COMPOSE_PROJECT_NAME .env | cut -d '=' -f2)
 	docker ps --filter NAME="$(PROJECT_NAME)*"
 
 rm:
-	docker ps --filter NAME="$(PROJECT_NAME)*" -q | xargs -r docker rm -f
+	docker ps --filter label=com.docker.compose.project="$(PROJECT_NAME)*" -q | xargs -r docker rm -f
 
 rmi: down
-	@docker images --filter=reference="$(PROJECT_NAME)/*" -q | xargs -r docker rmi
+	docker images --filter=reference="$(PROJECT_NAME)/*" -q | xargs -r docker rmi
 #docker images --filter reference=debian -q | xargs -r docker rmi
 
 volumes: down
+	docker volume ls -q --filter label=com.docker.compose.project="$(PROJECT_NAME)*" | xargs -r docker volume rm
 
 
 networks: down
+	docker network ls -q --filter label=com.docker.compose.project="$(PROJECT_NAME)*" | xargs -r docker network rm
 
 
 clean: down rm rmi volumes networks
+	sudo rm -rf ../data
 
 fclean: clean prune
+	sudo rm -rf ../data
+
+prune:
+	docker system prune -af
+
+re: fclean
+	up
