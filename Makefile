@@ -15,7 +15,7 @@ down:
 	@$(DC) down
 
 name:
-	@echo $(shell grep COMPOSE_PROJECT_NAME .env | cut -d '=' -f2)
+	@echo $(shell grep COMPOSE_PROJECT_NAME ./srcs/.env | cut -d '=' -f2)
 	@docker ps --filter NAME="$(PROJECT_NAME)*"
 
 rm:
@@ -26,11 +26,11 @@ rmi: down
 #docker images --filter reference=debian -q | xargs -r docker rmi
 
 volumes: down
-	@docker volume ls -q --filter label=com.docker.compose.project="$(PROJECT_NAME)*" | xargs -r docker volume rm
+	@docker volume ls -q --filter label=com.docker.compose.project="$(PROJECT_NAME)" | xargs -r docker volume rm
 
 
 networks: down
-	@docker network ls -q --filter label=com.docker.compose.project="$(PROJECT_NAME)*" | xargs -r docker network rm
+	@docker network ls -q --filter label=com.docker.compose.project="$(PROJECT_NAME)" | xargs -r docker network rm
 
 
 clean: down rm rmi volumes networks
