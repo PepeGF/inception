@@ -27,7 +27,7 @@ rmi: down
 
 volumes: down
 	@docker volume ls -q --filter label=com.docker.compose.project="$(PROJECT_NAME)" | xargs -r docker volume rm
-
+	@sudo rm -rf ../data
 
 networks: down
 	@docker network ls -q --filter label=com.docker.compose.project="$(PROJECT_NAME)" | xargs -r docker network rm
