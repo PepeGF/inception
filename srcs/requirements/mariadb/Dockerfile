@@ -10,8 +10,12 @@ RUN mkdir -p /var/run/mysqld && \
     chmod 777 /var/run/mysqld
 
 COPY ./conf/my.cnf /etc/mysql/my.cnf
-COPY ./conf/users.sql /home
-RUN service mysql start && mysql < /home/users.sql && rm /home/users.sql
+COPY ./conf/setup-db.sh /home
+
+RUN chmod +x /home/setup-db.sh
+
+ENTRYPOINT [ "/home/setup-db.sh" ]
+
 
 EXPOSE 3306
 

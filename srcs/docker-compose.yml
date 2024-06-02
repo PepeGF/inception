@@ -1,5 +1,5 @@
 version: '3'
-name: wololo
+name: fakeinception
 services:
   nginx:
     image: nginx:latest
