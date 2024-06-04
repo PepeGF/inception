@@ -14,9 +14,5 @@ COPY ./conf/setup-db.sh /home
 
 RUN chmod +x /home/setup-db.sh
 
-ENTRYPOINT [ "/home/setup-db.sh" ]
-
-
 EXPOSE 3306
-
-CMD ["mysqld"]
+ENTRYPOINT [ "/home/setup-db.sh" ]
