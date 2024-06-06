@@ -2,13 +2,15 @@ version: '3'
 name: fakeinception
 services:
   nginx:
-    image: nginx:latest
+    build: 
+      context: ./requirements/nginx/
+    # image: nginx:latest
     container_name: ${COMPOSE_PROJECT_NAME}_nginx
     restart: on-failure
     ports:
       - "80:80"
     volumes:
-      - wordpress_data:/var/www/html
+      # - wordpress_data:/var/www/html
       - ./nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - wordpress

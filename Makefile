@@ -49,3 +49,6 @@ PHONY: all up down name rm rmi volumes networks clean fclean prune re
 
 kmaria: down volumes
 	@docker rmi fakeinception-mariadb:latest
+
+knginx: down
+	@docker rmi fakeinception-nginx:latest
