@@ -10,7 +10,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      # - wordpress_data:/var/www/html
+      - wordpress_data:/var/www/html
       - ./nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - wordpress

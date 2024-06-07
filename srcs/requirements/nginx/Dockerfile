@@ -16,7 +16,9 @@ RUN mkdir -p /var/run/nginx
 RUN chmod 755 /var/www/html
 RUN chown -R www-data:www-data /var/www/html
 
-COPY ./tools/index.html /var/www/html
+#COPY ./tools/index.html /var/www/html
+
+COPY ./conf.d/nginx.conf /etc/nginx/conf.d/nginx.conf
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 EXPOSE 80
