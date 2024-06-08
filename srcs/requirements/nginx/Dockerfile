@@ -21,12 +21,6 @@ RUN chown -R www-data:www-data /var/www/html
 COPY ./conf.d/nginx.conf /etc/nginx/conf.d/nginx.conf
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
-EXPOSE 80
+EXPOSE 443
 CMD ["nginx"]
-
-
-
-
-
-
 
