@@ -2,8 +2,8 @@
 FROM debian:buster
 
 RUN apt-get update && apt-get install -y nginx openssl
-RUN apt-get install -y vim
-RUN apt-get install -y curl
+# RUN apt-get install -y vim
+# RUN apt-get install -y curl
 
 # del tutorial
 RUN mkdir -p /etc/nginx/ssl

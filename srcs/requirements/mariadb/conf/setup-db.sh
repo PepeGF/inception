@@ -11,7 +11,7 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';
 FLUSH PRIVILEGES;
 EOF
 
-cat /home/users.sql
+# cat /home/users.sql
 
 mysql < /home/users.sql  2>/home/error
 
