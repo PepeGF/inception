@@ -52,3 +52,6 @@ kmaria: down volumes
 
 knginx: down
 	@docker rmi fakeinception-nginx:latest
+
+kwordpress: down
+	@docker rmi fakeinception-wordpress:latest

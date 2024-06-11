@@ -29,7 +29,9 @@ services:
       - inception
 
   wordpress:
-    image: wordpress:php7.4-fpm
+    #image: wordpress:php7.4-fpm
+    build:
+      context: ./requirements/wordpress/
     container_name: ${COMPOSE_PROJECT_NAME}_wordpress
     restart: on-failure
     env_file:
