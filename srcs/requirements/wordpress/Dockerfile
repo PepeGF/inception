@@ -17,13 +17,14 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Descargar y configurar WordPress
-RUN curl -O https://wordpress.org/latest.tar.gz && \
-    tar -xzvf latest.tar.gz && \
-    rm latest.tar.gz 
-    # mv wordpress /var/www/html
+RUN curl -O https://wordpress.org/latest.tar.gz
+RUN tar -xzvf latest.tar.gz
+RUN rm latest.tar.gz
+RUN mkdir -p /var/www/html
+RUN mv wordpress/ /var/www/html
 
 # Configurar permisos
-# RUN chown -R www-data:www-data /var/www/html
+RUN chown -R www-data:www-data /var/www/html
 
 # Copiar archivo wp-config.php si es necesario
 # COPY wp-config.php /var/www/html/wp-config.php
@@ -32,5 +33,4 @@ RUN curl -O https://wordpress.org/latest.tar.gz && \
 EXPOSE 9000
 
 # Comando de inicio para PHP-FPM
-CMD ["/bin/bash"]
-# CMD ["php-fpm7.3", "-F"]
+CMD ["php-fpm7.3", "-F"]
