@@ -1,6 +1,7 @@
 FROM debian:buster
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update 
+RUN apt-get install -y \
     php \
     php-fpm \
     php-mysql \
@@ -11,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     php-mbstring \
     php-xml \
     php-xmlrpc \
+    mariadb-client \
     curl \
     tar \
     vim \
@@ -26,6 +28,9 @@ RUN mv wordpress/ /var/www/html
 # Configurar permisos
 RUN chown -R www-data:www-data /var/www/html
 
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar
+RUN mv wp-cli.phar /usr/local/bin/wp
 # Copiar archivo wp-config.php si es necesario
 # COPY wp-config.php /var/www/html/wp-config.php
 

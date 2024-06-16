@@ -7,8 +7,8 @@ DC=docker-compose -f $(COMPOSE_FILE) -p $(PROJECT_NAME)
 all: up
 
 up:
-	@mkdir -p ../data/mariadb_vol
-	@mkdir -p ../data/wordpress_vol
+	@mkdir -p /home/josgarci/data/mariadb_vol
+	@mkdir -p /home/josgarci/wordpress_vol
 	@$(DC) up -d
 
 down:
