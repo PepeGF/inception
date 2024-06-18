@@ -8,7 +8,7 @@ all: up
 
 up:
 	@mkdir -p /home/josgarci/data/mariadb_vol
-	@mkdir -p /home/josgarci/wordpress_vol
+	@mkdir -p /home/josgarci/data/wordpress_vol
 	@$(DC) up -d
 
 down:
@@ -27,17 +27,17 @@ rmi: down
 
 volumes: down
 	@docker volume ls -q --filter label=com.docker.compose.project="$(PROJECT_NAME)" | xargs -r docker volume rm
-	@sudo rm -rf ../data
+	@sudo rm -rf /home/josgarci/data
 
 networks: down
 	@docker network ls -q --filter label=com.docker.compose.project="$(PROJECT_NAME)" | xargs -r docker network rm
 
 
 clean: down rm rmi volumes networks
-	@sudo rm -rf ../data
+	@sudo rm -rf /home/josgarci/data
 
 fclean: clean prune
-	@sudo rm -rf ../data
+	@sudo rm -rf /home/josgarci/data
 
 prune:
 	@docker system prune -af
@@ -48,10 +48,10 @@ re: fclean
 PHONY: all up down name rm rmi volumes networks clean fclean prune re
 
 kmaria: down volumes
-	@docker rmi fakeinception-mariadb:latest
+	@docker rmi fakeinception_mariadb:latest
 
 knginx: down
-	@docker rmi fakeinception-nginx:latest
+	@docker rmi fakeinception_nginx:latest
 
-kwordpress: down
-	@docker rmi fakeinception-wordpress:latest
+kwordpress: down volumes
+	@docker rmi fakeinception_wordpress:latest

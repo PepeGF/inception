@@ -21,6 +21,8 @@ services:
       context: ./requirements/mariadb/
     container_name: ${COMPOSE_PROJECT_NAME}_mariadb
     restart: on-failure
+    ports:
+      - "3306:3306"
     env_file:
       - .env
     volumes:
