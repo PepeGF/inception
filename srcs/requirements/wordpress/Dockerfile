@@ -19,10 +19,11 @@ RUN apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Descargar y configurar WordPress
-RUN mkdir -p /var/www/html
 RUN curl -O https://wordpress.org/latest.tar.gz
-RUN tar -xzf latest.tar.gz -C /var/www/html --strip-components=1
-RUN rm latest.tar.gz 
+RUN tar -xzf latest.tar.gz 
+RUN mv wordpress/* .
+RUN rm -rf latest.tar.gz 
+RUN rm -rf wordpress
 
 RUN mkdir -p /run/php && chown -R www-data:www-data /run/php
 
@@ -30,6 +31,7 @@ RUN mkdir -p /run/php && chown -R www-data:www-data /run/php
 COPY conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 
 # Configurar permisos
+RUN mkdir -p /var/www/html
 RUN chown -R www-data:www-data /var/www/html
 
 # Descarga el cli de wordpress para hacer la configuración inicial
@@ -38,11 +40,12 @@ RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 
 # Copia y ejecuta el script de configuración inicial para que se abra ya configurado
-COPY ./tools/setup.sh .
+COPY ./tools/setup.sh /usr/local/bin
+WORKDIR /var/www/html/
 
 # Exponer el puerto en el que PHP-FPM escucha (9000 por defecto)
 EXPOSE 9000
 
-ENTRYPOINT ["bash" "./setup.sh"]
+ENTRYPOINT ["bash", "/usr/local/bin/setup.sh"]
 # Comando de inicio para PHP-FPM
 # CMD ["php-fpm7.3", "-F"]
