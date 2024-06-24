@@ -7,8 +7,8 @@ DC=docker-compose -f $(COMPOSE_FILE) -p $(PROJECT_NAME)
 all: up
 
 up:
-	@mkdir -p /home/josgarci/data/mariadb_vol
-	@mkdir -p /home/josgarci/data/wordpress_vol
+	@mkdir -p /home/$(USER)/data/mariadb_vol
+	@mkdir -p /home/$(USER)/data/wordpress_vol
 	@$(DC) up -d
 
 down:
@@ -27,17 +27,17 @@ rmi: down
 
 volumes: down
 	@docker volume ls -q --filter label=com.docker.compose.project="$(PROJECT_NAME)" | xargs -r docker volume rm
-	@sudo rm -rf /home/josgarci/data
+	@sudo rm -rf /home/$(USER)/data
 
 networks: down
 	@docker network ls -q --filter label=com.docker.compose.project="$(PROJECT_NAME)" | xargs -r docker network rm
 
 
 clean: down rm rmi volumes networks
-	@sudo rm -rf /home/josgarci/data
+	@sudo rm -rf /home/$(USER)/data
 
 fclean: clean prune
-	@sudo rm -rf /home/josgarci/data
+	@sudo rm -rf /home/$(USER)/data
 
 prune:
 	@docker system prune -af
@@ -55,3 +55,6 @@ knginx: down
 
 kwordpress: down volumes
 	@docker rmi fakeinception_wordpress:latest
+
+wololo:
+	echo $(USER)
