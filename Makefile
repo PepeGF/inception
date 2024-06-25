@@ -16,14 +16,13 @@ down:
 
 name:
 	@echo $(shell grep COMPOSE_PROJECT_NAME ./srcs/.env | cut -d '=' -f2)
-	@docker ps --filter NAME="$(PROJECT_NAME)*"
+	@docker ps --filter label=com.docker.compose.project="$(PROJECT_NAME)"
 
 rm:
-	@docker ps --filter label=com.docker.compose.project="$(PROJECT_NAME)*" -q | xargs -r docker rm -f
+	@docker ps --filter label=com.docker.compose.project="$(PROJECT_NAME)" -q | xargs -r docker rm -f
 
 rmi: down
-	@docker images --filter=reference="$(PROJECT_NAME)/*" -q | xargs -r docker rmi
-#docker images --filter reference=debian -q | xargs -r docker rmi
+	@docker images --filter=reference="$(PROJECT_NAME)*" -q | xargs -r docker rmi
 
 volumes: down
 	@docker volume ls -q --filter label=com.docker.compose.project="$(PROJECT_NAME)" | xargs -r docker volume rm
@@ -31,7 +30,6 @@ volumes: down
 
 networks: down
 	@docker network ls -q --filter label=com.docker.compose.project="$(PROJECT_NAME)" | xargs -r docker network rm
-
 
 clean: down rm rmi volumes networks
 	@sudo rm -rf /home/$(USER)/data
@@ -47,14 +45,14 @@ re: fclean
 
 PHONY: all up down name rm rmi volumes networks clean fclean prune re
 
-kmaria: down volumes
-	@docker rmi fakeinception_mariadb:latest
+killmaria: down volumes
+	@docker rmi mariadb:$(PROJECT_NAME)
 
-knginx: down
-	@docker rmi fakeinception_nginx:latest
+killnginx: down
+	@docker rmi nginx:$(PROJECT_NAME)
 
-kwordpress: down volumes
-	@docker rmi fakeinception_wordpress:latest
+killwordpress: down volumes
+	@docker rmi wordpress:$(PROJECT_NAME)
 
 wololo:
 	echo $(USER)

@@ -4,8 +4,8 @@ services:
   nginx:
     build: 
       context: ./requirements/nginx/
-    # image: nginx:latest
-    container_name: ${COMPOSE_PROJECT_NAME}_nginx
+    image: nginx:${COMPOSE_PROJECT_NAME}
+    container_name: nginx
     restart: on-failure
     ports:
       - "443:443"
@@ -19,7 +19,8 @@ services:
   mariadb:
     build:
       context: ./requirements/mariadb/
-    container_name: ${COMPOSE_PROJECT_NAME}_mariadb
+    image: mariadb:${COMPOSE_PROJECT_NAME}
+    container_name: mariadb
     restart: on-failure
     ports:
       - "3306:3306"
@@ -31,10 +32,10 @@ services:
       - inception
 
   wordpress:
-    #image: wordpress:php7.4-fpm
     build:
       context: ./requirements/wordpress/
-    container_name: ${COMPOSE_PROJECT_NAME}_wordpress
+    image: wordpress:${COMPOSE_PROJECT_NAME}
+    container_name: wordpress
     restart: on-failure
     env_file:
       - .env
