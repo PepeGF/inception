@@ -1,3 +1,5 @@
+$(shell cp /home/$(USER)/Desktop/.env ./srcs/.env)
+
 COMPOSE_FILE=./srcs/docker-compose.yml
 
 PROJECT_NAME=$(shell grep COMPOSE_PROJECT_NAME ./srcs/.env | cut -d '=' -f2)
@@ -37,14 +39,13 @@ clean: down rm rmi volumes networks
 
 fclean: clean prune
 	@sudo rm -rf /home/$(USER)/data
+	@rm ./srcs/.env
 
 prune:
 	@docker system prune -af
 
 re: fclean
 	up
-
-PHONY: all up down name rm rmi volumes networks clean fclean prune re
 
 killmaria: down volumes
 	@docker rmi mariadb:$(PROJECT_NAME)
@@ -55,5 +56,4 @@ killnginx: down
 killwordpress: down volumes
 	@docker rmi wordpress:$(PROJECT_NAME)
 
-wololo:
-	echo $(USER)
+PHONY: all up down name rm rmi volumes networks clean fclean prune re killmaria killnginx killwordpress
