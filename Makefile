@@ -9,6 +9,7 @@ all: up
 up:
 	@mkdir -p /home/$(USER)/data/mariadb_vol
 	@mkdir -p /home/$(USER)/data/wordpress_vol
+	@cp /home/$(USER)/Desktop/.env ./srcs/.env
 	@$(DC) up -d
 
 down:
