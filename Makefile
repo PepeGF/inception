@@ -34,6 +34,11 @@ volumes: down
 networks: down
 	@docker network ls -q --filter label=com.docker.compose.project="$(PROJECT_NAME)" | xargs -r docker network rm
 
+logs:
+	docker logs mariadb
+	docker logs wordpress
+	docker logs nginx
+
 clean: down rm rmi volumes networks
 	@sudo rm -rf /home/$(USER)/data
 
@@ -47,13 +52,13 @@ prune:
 re: fclean
 	up
 
-killmaria: down volumes
+km: down volumes
 	@docker rmi mariadb:$(PROJECT_NAME)
 
-killnginx: down
+kn: down
 	@docker rmi nginx:$(PROJECT_NAME)
 
-killwordpress: down volumes
+kw: down volumes
 	@docker rmi wordpress:$(PROJECT_NAME)
 
-PHONY: all up down name rm rmi volumes networks clean fclean prune re killmaria killnginx killwordpress
+PHONY: all up down name rm rmi volumes networks clean fclean prune re km kn kw logs

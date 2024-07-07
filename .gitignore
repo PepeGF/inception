@@ -1,3 +1,2 @@
 volumes/mariadb_vol/*
 volumes/wordpress_vol/*
-**/*/.env
