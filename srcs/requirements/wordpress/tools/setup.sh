@@ -5,8 +5,6 @@ then
     # Descargar WordPress
     wp core download --path=/var/www/html --locale=es_ES --allow-root
 
-    echo "archivos en /var/www/html después: " $(ls -lh /var/www/html) >> /home/archivos_en_var_www_html
-
     # Crear archivo de configuración wp-config.php
     wp config create --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=mariadb --allow-root
 
