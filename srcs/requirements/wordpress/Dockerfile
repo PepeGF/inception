@@ -7,17 +7,17 @@ RUN apt-get install -y \
     php-mysql \
     php-curl \
     php-json \
-    php-cgi \
-    php-gd \
-    php-mbstring \
     php-xml \
-    php-xmlrpc \
     mariadb-client \
     curl \
     tar \
     vim \
     && rm -rf /var/lib/apt/lists/*
-
+    
+# php-cgi \
+# php-mbstring \
+# php-gd \
+# php-xmlrpc \
 # Descargar y configurar WordPress
 RUN curl -O https://wordpress.org/latest.tar.gz
 RUN tar -xzf latest.tar.gz 
