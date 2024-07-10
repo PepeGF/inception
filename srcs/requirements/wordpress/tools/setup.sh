@@ -21,6 +21,10 @@ then
     mkdir -p /var/www/html/wp-content/uploads
     chown -R www-data:www-data /var/www/html/wp-content/uploads/*
     chmod 775 /var/www/html/wp-content/uploads
+    rm -rf /wp*
+    rm /*.php
+    rm /license.txt /readme.html
+
 fi
 
 exec php-fpm7.3 -F
