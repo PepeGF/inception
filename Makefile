@@ -1,4 +1,4 @@
-$(shell cp /home/$(USER)/Desktop/.env ./srcs/.env)
+# $(shell cp /home/$(USER)/Desktop/.env ./srcs/.env)
 
 COMPOSE_FILE=./srcs/docker-compose.yml
 
@@ -25,7 +25,7 @@ rm:
 	@docker ps --filter label=com.docker.compose.project="$(PROJECT_NAME)" -q | xargs -r docker rm -f
 
 rmi: down
-	@docker images --filter=reference="$(PROJECT_NAME)*" -q | xargs -r docker rmi
+	@docker images --filter=reference="*:$(PROJECT_NAME)" -q | xargs -r docker rmi
 
 volumes: down
 	@docker volume ls -q --filter label=com.docker.compose.project="$(PROJECT_NAME)" | xargs -r docker volume rm
