@@ -2,17 +2,16 @@ FROM debian:buster
 
 RUN apt-get update && \
     apt-get install -y \
-    mariadb-server && \
-    rm -rf /var/lib/apt/lists/*
+    mariadb-server
 
-RUN mkdir -p /var/run/mysqld && \
-    chown -R mysql:mysql /var/run/mysqld && \
-    chmod 777 /var/run/mysqld
+RUN mkdir /var/run/mysqld
+RUN chown mysql:mysql /var/run/mysqld
+
+COPY ./conf/mdb_setup.sh /home/
+RUN chmod 755 /home/mdb_setup.sh
 
 COPY ./conf/my-server.cnf /etc/mysql/mariadb.conf.d/
-COPY ./conf/setup-db.sh /home
-
-RUN chmod +x /home/setup-db.sh
 
 EXPOSE 3306
-ENTRYPOINT [ "/home/setup-db.sh" ]
+ENTRYPOINT ["/home/mdb_setup.sh"]
+

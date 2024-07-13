@@ -1,6 +1,13 @@
 #!/bin/bash
 
-service mysql start 2>>/home/error >>/home/bien
+# Start MariaDB service
+service mysql start
+
+# Wait for MariaDB to be ready
+until mysqladmin ping &>/dev/null; do
+    echo -n "." 
+    sleep 1
+done
 
 cat << EOF > /home/users.sql
 CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;
@@ -10,10 +17,10 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';
 FLUSH PRIVILEGES;
 EOF
 
-# cat /home/users.sql
+mysql < /home/users.sql
 
-mysql < /home/users.sql  2>>/home/error2 >>/home/bien2
+# Stop MariaDB service
+kill $(cat /var/run/mysqld/mysqld.pid)
 
-# kill $(cat /var/run/mysqld/mysqld.pid)
-
-exec mysqld 2>>/home/error3 >>/home/bien3
+# Start MariaDB in safe mode
+exec /usr/bin/mysqld_safe
